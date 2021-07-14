@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ru.mtsteta.courses.domain.Course;
@@ -31,5 +32,11 @@ public class CourseController {
     public String courseTable(Model model) {
         model.addAttribute("courses", courseService.findAll());
         return "course_list";
+    }
+
+    @GetMapping("/{id}")
+    public String courseForm(Model model, @PathVariable("id") Long id) {
+        model.addAttribute("course", courseService.findById(id));
+        return "course_form";
     }
 }

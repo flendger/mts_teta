@@ -6,6 +6,7 @@ import ru.mtsteta.courses.dao.CourseRepository;
 import ru.mtsteta.courses.domain.Course;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,5 +21,9 @@ public class CourseService {
 
     public List<Course> findAll() {
         return courseRepository.findAll();
+    }
+
+    public Optional<Course> findById(Long id) {
+        return courseRepository.findById(id);
     }
 }
