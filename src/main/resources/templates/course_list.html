@@ -34,7 +34,9 @@
             <tbody>
             <tr th:each="course: ${courses}">
                 <td class="text-center" th:text="${course.id}">1</td>
-                <td class="text-left" th:text="${course.title}">Course name</td>
+                <td class="text-left">
+                    <a th:text="${course.title}" th:href="@{/course/{id}(id = ${course.id})}">Course name</a>
+                </td>
                 <td class="text-left" th:text="${course.author}">Course author</td>
                 <td>
                     <div class="mb-1">
