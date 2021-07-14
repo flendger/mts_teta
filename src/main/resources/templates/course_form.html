@@ -31,7 +31,7 @@
         </div>
     </form>
 
-    <form th:object="${course}" method="post">
+    <form th:object="${course}" th:method="post" th:action="@{/course}">
         <input type="hidden" th:field="*{id}">
         <div class="form-group">
             <label class="mt-3" for="nameInput">Название</label>

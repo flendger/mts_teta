@@ -3,15 +3,13 @@ package ru.mtsteta.courses.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import ru.mtsteta.courses.domain.Course;
 import ru.mtsteta.courses.service.CourseService;
 import ru.mtsteta.courses.service.StatisticsCounter;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/course")
@@ -35,8 +33,19 @@ public class CourseController {
     }
 
     @GetMapping("/{id}")
-    public String courseForm(Model model, @PathVariable("id") Long id) {
-        model.addAttribute("course", courseService.findById(id));
+    public String editCourse(Model model, @PathVariable("id") Long id) {
+        Optional<Course> optionalCourse = courseService.findById(id);
+        if (optionalCourse.isEmpty()) {
+            return "course_not_found";
+        }
+
+        model.addAttribute("course", optionalCourse.get());
         return "course_form";
+    }
+
+    @PostMapping
+    public String saveCourse(Course course) {
+        courseService.save(course);
+        return "redirect:/course";
     }
 }

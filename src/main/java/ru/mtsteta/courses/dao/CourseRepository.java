@@ -10,7 +10,7 @@ public interface CourseRepository {
 
     Optional<Course> findById(long id);
 
-    void save(Course course);
+    Course save(Course course);
 
     void delete(long id);
 
