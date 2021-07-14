@@ -21,6 +21,10 @@
         </div>
     </form>
 
+    <div class="pt-2 pb-2">
+        <a class="btn btn-warning" th:href="@{/course/new}">Добавить курс</a>
+    </div>
+
     <div th:if="${courses.size() > 0}">
         <table class="table table-hover">
             <thead class="thead-light">

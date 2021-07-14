@@ -48,4 +48,10 @@ public class CourseController {
         courseService.save(course);
         return "redirect:/course";
     }
+
+    @GetMapping("/new")
+    public String createCourse(Model model) {
+        model.addAttribute("course", new Course());
+        return "course_form";
+    }
 }
