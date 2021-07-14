@@ -23,6 +23,13 @@ public class CourseService {
         return courseRepository.findAll();
     }
 
+    public List<Course> findByTitlePrefix(String titlePrefix) {
+        return courseRepository.findAll()
+                .stream()
+                .filter(course -> course.getTitle().startsWith(titlePrefix))
+                .collect(Collectors.toList());
+    }
+
     public Optional<Course> findById(Long id) {
         return courseRepository.findById(id);
     }

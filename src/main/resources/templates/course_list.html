@@ -19,7 +19,7 @@
     <form>
         <div class="form-group">
             <label for="findInput">Поиск по названию</label>
-            <input type="text" class="form-control" id="findInput" aria-describedby="findHelp">
+            <input type="text" class="form-control" id="findInput" aria-describedby="findHelp" name="titlePrefix" th:value="${param.titlePrefix}">
         </div>
         <div class="text-right">
             <button type="submit" class="btn btn-primary mb-3">Найти!</button>

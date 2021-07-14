@@ -31,8 +31,8 @@ public class CourseController {
     }
 
     @GetMapping
-    public String courseTable(Model model) {
-        model.addAttribute("courses", courseService.findAll());
+    public String courseTable(Model model, @RequestParam(name = "titlePrefix", required = false) String titlePrefix) {
+        model.addAttribute("courses", courseService.findByTitlePrefix(titlePrefix == null ? "" : titlePrefix));
         return "course_list";
     }
 
