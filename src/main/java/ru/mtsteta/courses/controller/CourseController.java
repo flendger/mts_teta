@@ -1,10 +1,13 @@
 package ru.mtsteta.courses.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import ru.mtsteta.courses.domain.Course;
+import ru.mtsteta.courses.exceptions.NotFoundException;
 import ru.mtsteta.courses.service.CourseService;
 import ru.mtsteta.courses.service.StatisticsCounter;
 
@@ -34,12 +37,7 @@ public class CourseController {
 
     @GetMapping("/{id}")
     public String editCourse(Model model, @PathVariable("id") Long id) {
-        Optional<Course> optionalCourse = courseService.findById(id);
-        if (optionalCourse.isEmpty()) {
-            return "course_not_found";
-        }
-
-        model.addAttribute("course", optionalCourse.get());
+        model.addAttribute("course", courseService.findById(id).orElseThrow(() -> new NotFoundException(String.format("Course [%d] not found", id))));
         return "course_form";
     }
 
@@ -55,9 +53,17 @@ public class CourseController {
         return "course_form";
     }
 
-     @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}")
     public String deleteCourse(@PathVariable Long id) {
         courseService.delete(id);
         return "redirect:/course";
-     }
+    }
+
+    @ExceptionHandler
+    public ModelAndView notFoundExceptionHandler(NotFoundException ex, Model model) {
+        ModelAndView modelAndView = new ModelAndView("not_found");
+        modelAndView.setStatus(HttpStatus.NOT_FOUND);
+        model.addAttribute("msg", ex.getMessage());
+        return modelAndView;
+    }
 }
