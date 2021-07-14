@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.mtsteta.courses.domain.Course;
@@ -11,8 +12,8 @@ import ru.mtsteta.courses.exceptions.NotFoundException;
 import ru.mtsteta.courses.service.CourseService;
 import ru.mtsteta.courses.service.StatisticsCounter;
 
+import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/course")
@@ -42,7 +43,11 @@ public class CourseController {
     }
 
     @PostMapping
-    public String saveCourse(Course course) {
+    public String saveCourse(@Valid Course course, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "course_form";
+        }
+
         courseService.save(course);
         return "redirect:/course";
     }
