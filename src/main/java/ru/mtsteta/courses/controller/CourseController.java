@@ -54,4 +54,10 @@ public class CourseController {
         model.addAttribute("course", new Course());
         return "course_form";
     }
+
+     @DeleteMapping("/{id}")
+    public String deleteCourse(@PathVariable Long id) {
+        courseService.delete(id);
+        return "redirect:/course";
+     }
 }
