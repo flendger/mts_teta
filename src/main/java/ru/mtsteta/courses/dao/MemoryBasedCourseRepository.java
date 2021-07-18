@@ -35,11 +35,12 @@ public class MemoryBasedCourseRepository implements CourseRepository{
     }
 
     @Override
-    public void save(Course course) {
+    public Course save(Course course) {
         if (course.getId() == null) {
             course.setId(identity.incrementAndGet());
         }
         courseMap.put(course.getId(), course);
+        return course;
     }
 
     @Override
