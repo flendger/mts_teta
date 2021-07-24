@@ -64,7 +64,7 @@ public class CourseController {
         }
 
         courseService.save(course);
-        return "redirect:course";
+        return "redirect:/course";
     }
 
     @GetMapping("/new")
