@@ -3,3 +3,17 @@ spring:
     hiddenmethod:
       filter:
         enabled: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/courses_demo
+    username: courses_db
+    password: 12345
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format-sql: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
