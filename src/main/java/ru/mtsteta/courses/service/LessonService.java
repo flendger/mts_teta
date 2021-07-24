@@ -29,4 +29,8 @@ public class LessonService {
     public Optional<Lesson> findById(Long id) {
         return lessonRepository.findById(id);
     }
+
+    public void deleteById(Long id) {
+        lessonRepository.deleteById(id);
+    }
 }
