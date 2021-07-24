@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Entity
 @Table(name = "courses")
@@ -25,4 +26,7 @@ public class Course {
     @NotBlank(message = "Название курса должно быть заполнено")
     @Column(name = "title")
     private String title;
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    private List<Lesson> lessons;
 }
