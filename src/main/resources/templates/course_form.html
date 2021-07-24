@@ -51,7 +51,7 @@
     </form>
 
     <div>
-        <button type="button" class="btn btn-warning mb-2">Добавить урок</button>
+        <a th:href="@{/lesson/new(course_id = ${course.id})}" class="btn btn-warning mb-2">Добавить урок</a>
         <table class="table table-hover">
             <thead class="thead-light">
             <tr>
