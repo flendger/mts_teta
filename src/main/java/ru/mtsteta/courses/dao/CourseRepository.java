@@ -1,18 +1,14 @@
 package ru.mtsteta.courses.dao;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import ru.mtsteta.courses.domain.Course;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface CourseRepository {
-    List<Course> findAll();
+@Repository
+public interface CourseRepository extends JpaRepository<Course, Long> {
+    List<Course> findByTitleLike(String title);
 
-    Optional<Course> findById(long id);
-
-    Course save(Course course);
-
-    void delete(long id);
-
-    List<Course> findByTitleWithPrefix(String prefix);
+    List<Course> findByAuthorLike(String author);
 }

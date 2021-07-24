@@ -7,16 +7,14 @@ import ru.mtsteta.courses.domain.Course;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class CourseService {
     private final CourseRepository courseRepository;
 
-    public List<Course> coursesByAuthor(String name) {
-        List<Course> allCourses = courseRepository.findAll();
-        return allCourses.stream().filter(course -> course.getAuthor().equals(name)).collect(Collectors.toList());
+    public List<Course> coursesByAuthor(String author) {
+        return courseRepository.findByAuthorLike(author + "%");
     }
 
     public List<Course> findAll() {
@@ -24,10 +22,7 @@ public class CourseService {
     }
 
     public List<Course> findByTitlePrefix(String titlePrefix) {
-        return courseRepository.findAll()
-                .stream()
-                .filter(course -> course.getTitle().startsWith(titlePrefix))
-                .collect(Collectors.toList());
+        return courseRepository.findByTitleLike(titlePrefix + "%");
     }
 
     public Optional<Course> findById(Long id) {
@@ -39,6 +34,6 @@ public class CourseService {
     }
 
     public void delete(Long id) {
-        courseRepository.delete(id);
+//        courseRepository.delete(id);
     }
 }
