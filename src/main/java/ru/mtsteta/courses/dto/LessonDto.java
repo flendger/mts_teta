@@ -2,9 +2,8 @@ package ru.mtsteta.courses.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.mtsteta.courses.domain.Course;
+import ru.mtsteta.courses.domain.Lesson;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @Data
@@ -20,6 +19,16 @@ public class LessonDto {
 
     public LessonDto(Long courseId) {
         this.courseId = courseId;
+    }
+
+    public static LessonDto from(Lesson lesson) {
+        LessonDto lessonDto = new LessonDto();
+        lessonDto.setId(lesson.getId());
+        lessonDto.setTitle(lesson.getTitle());
+        lessonDto.setText(lesson.getText());
+        lessonDto.setCourseId(lesson.getCourse().getId());
+
+        return lessonDto;
     }
 
     @Override
