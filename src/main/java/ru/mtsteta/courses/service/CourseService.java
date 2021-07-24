@@ -14,7 +14,7 @@ public class CourseService {
     private final CourseRepository courseRepository;
 
     public List<Course> coursesByAuthor(String author) {
-        return courseRepository.findByAuthorLike(author + "%");
+        return courseRepository.findByAuthorLike(author);
     }
 
     public List<Course> findAll() {
@@ -22,7 +22,7 @@ public class CourseService {
     }
 
     public List<Course> findByTitlePrefix(String titlePrefix) {
-        return courseRepository.findByTitleLike(titlePrefix + "%");
+        return courseRepository.findByTitleLike(titlePrefix);
     }
 
     public Optional<Course> findById(Long id) {
