@@ -61,9 +61,11 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td class="text-center">1</td>
-                <td>Lesson name</td>
+            <tr th:each="lesson: ${lessons}">
+                <td class="text-center" th:text="${lesson.id}">1</td>
+                <td>
+                    <a th:text="${lesson.title}" th:href="@{/lesson/{id}(id = ${lesson.id})}">Lesson title</a>
+                </td>
                 <td class="text-center">
                     <a href="#" class="btn btn-danger">Удалить</a>
                 </td>

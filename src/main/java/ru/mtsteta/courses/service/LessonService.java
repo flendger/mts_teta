@@ -8,6 +8,8 @@ import ru.mtsteta.courses.domain.Course;
 import ru.mtsteta.courses.domain.Lesson;
 import ru.mtsteta.courses.dto.LessonDto;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class LessonService {
@@ -22,5 +24,9 @@ public class LessonService {
         lesson.setText(lessonDto.getText());
         lesson.setCourse(course);
         return lessonRepository.save(lesson);
+    }
+
+    public Optional<Lesson> findById(Long id) {
+        return lessonRepository.findById(id);
     }
 }

@@ -4,11 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import ru.mtsteta.courses.domain.Lesson;
 import ru.mtsteta.courses.dto.LessonDto;
+import ru.mtsteta.courses.exceptions.NotFoundException;
 import ru.mtsteta.courses.service.LessonService;
 
 import javax.validation.Valid;
@@ -22,6 +21,14 @@ public class LessonController {
     @GetMapping("/new")
     public String newLesson(Model model, @RequestParam(name = "course_id") Long courseId) {
         model.addAttribute("lessonDto", new LessonDto(courseId));
+        return "lesson_form";
+    }
+
+    @GetMapping("/{id}")
+    public String editLesson(Model model, @PathVariable("id") Long id) {
+        Lesson lesson = lessonService.findById(id)
+                .orElseThrow(() -> new NotFoundException(String.format("Lesson [%d] not found", id)));
+        model.addAttribute("lessonDto", LessonDto.from(lesson));
         return "lesson_form";
     }
 

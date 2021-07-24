@@ -17,7 +17,8 @@
 
     <header th:replace="header :: header"></header>
 
-    <h1 style="text-align: center">Создать урок</h1>
+    <h1 style="text-align: center" th:if="${lessonDto.id == null}">Создать урок</h1>
+    <h1 style="text-align: center" th:if="${lessonDto.id != null}">Редактировать урок</h1>
 
     <form th:object="${lessonDto}" th:method="post" th:action="@{/lesson}">
         <input type="hidden" th:field="*{id}">
