@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "courses")
@@ -29,4 +30,7 @@ public class Course {
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<Lesson> lessons;
+
+    @ManyToMany
+    private Set<User> users;
 }
