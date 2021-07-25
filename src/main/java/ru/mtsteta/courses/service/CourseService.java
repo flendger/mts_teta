@@ -2,8 +2,11 @@ package ru.mtsteta.courses.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.mtsteta.courses.dao.CourseRepository;
+import ru.mtsteta.courses.dao.UserRepository;
 import ru.mtsteta.courses.domain.Course;
+import ru.mtsteta.courses.domain.User;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,6 +15,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CourseService {
     private final CourseRepository courseRepository;
+    private final UserRepository userRepository;
 
     public List<Course> coursesByAuthor(String author) {
         return courseRepository.findByAuthorLike(author);
@@ -35,5 +39,15 @@ public class CourseService {
 
     public void delete(Long id) {
         courseRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void assignUserToCourse(Long courseId, Long userId) {
+        Course course = courseRepository.getById(courseId);
+
+        User user = userRepository.getById(userId);
+        course.getUsers().add(user);
+
+        courseRepository.save(course);
     }
 }

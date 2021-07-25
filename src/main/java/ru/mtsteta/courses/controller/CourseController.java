@@ -13,6 +13,7 @@ import ru.mtsteta.courses.dto.LessonDto;
 import ru.mtsteta.courses.exceptions.NotFoundException;
 import ru.mtsteta.courses.service.CourseService;
 import ru.mtsteta.courses.service.StatisticsCounter;
+import ru.mtsteta.courses.service.UserService;
 
 import javax.validation.Valid;
 import java.util.Comparator;
@@ -25,6 +26,7 @@ import java.util.stream.Collectors;
 public class CourseController {
     private final CourseService courseService;
     private final StatisticsCounter statisticsCounter;
+    private final UserService userService;
 
     @GetMapping("/interesting")
     @ResponseBody
@@ -54,6 +56,7 @@ public class CourseController {
                 .map(LessonDto::from)
                 .sorted(Comparator.comparing(LessonDto::getId))
                 .collect(Collectors.toList()));
+        model.addAttribute("users", userService.findAllByCoursesNotContains(course));
         return "course_form";
     }
 
@@ -65,6 +68,13 @@ public class CourseController {
 
         courseService.save(course);
         return "redirect:/course";
+    }
+
+    @PostMapping("/{id}/assign")
+    public String assignUserToCourse(@PathVariable("id") Long courseId, @RequestParam("userId") Long userId) {
+        courseService.assignUserToCourse(courseId, userId);
+
+        return "redirect:/course/" + courseId;
     }
 
     @GetMapping("/new")
