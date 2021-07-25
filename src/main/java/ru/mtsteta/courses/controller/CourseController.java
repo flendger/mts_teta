@@ -77,6 +77,13 @@ public class CourseController {
         return "redirect:/course/" + courseId;
     }
 
+    @DeleteMapping("/{id}/dismiss")
+    public String dismissUserFromCourse(@PathVariable("id") Long courseId, @RequestParam("userId") Long userId) {
+        courseService.dismissUserFromCourse(courseId, userId);
+
+        return "redirect:/course/" + courseId;
+    }
+
     @GetMapping("/new")
     public String createCourse(Model model) {
         model.addAttribute("course", new Course());

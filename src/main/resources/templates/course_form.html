@@ -104,11 +104,14 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td class="text-center">1</td>
-                <td>Username</td>
+            <tr th:each="user : ${course.users}">
+                <td class="text-center" th:text="${user.id}">1</td>
+                <td th:text="${user.username}">Username</td>
                 <td class="text-center">
-                    <a href="#" class="btn btn-danger">Снять с курса</a>
+                    <form th:method="delete" th:action="@{/course/{courseId}/dismiss(courseId = ${course.id})}">
+                        <input type="hidden" name="userId" th:value="${user.id}">
+                        <button type="submit" class="btn btn-danger">Снять с курса</button>
+                    </form>
                 </td>
             </tr>
             </tbody>

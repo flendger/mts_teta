@@ -50,4 +50,14 @@ public class CourseService {
 
         courseRepository.save(course);
     }
+
+    @Transactional
+    public void dismissUserFromCourse(Long courseId, Long userId) {
+        Course course = courseRepository.getById(courseId);
+
+        User user = userRepository.getById(userId);
+        course.getUsers().remove(user);
+
+        courseRepository.save(course);
+    }
 }
