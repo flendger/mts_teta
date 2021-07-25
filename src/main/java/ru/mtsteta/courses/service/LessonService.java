@@ -17,7 +17,7 @@ public class LessonService {
     private final CourseRepository courseRepository;
 
     public Lesson save(LessonDto lessonDto) {
-        Course course = courseRepository.getOne(lessonDto.getCourseId());
+        Course course = courseRepository.getById(lessonDto.getCourseId());
         Lesson lesson = new Lesson();
         lesson.setId(lessonDto.getId());
         lesson.setTitle(lessonDto.getTitle());
