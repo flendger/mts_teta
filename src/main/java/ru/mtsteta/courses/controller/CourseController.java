@@ -3,17 +3,22 @@ package ru.mtsteta.courses.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.mtsteta.courses.domain.Course;
+import ru.mtsteta.courses.dto.LessonDto;
 import ru.mtsteta.courses.exceptions.NotFoundException;
 import ru.mtsteta.courses.service.CourseService;
 import ru.mtsteta.courses.service.StatisticsCounter;
+import ru.mtsteta.courses.service.UserService;
 
 import javax.validation.Valid;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/course")
@@ -21,6 +26,7 @@ import java.util.List;
 public class CourseController {
     private final CourseService courseService;
     private final StatisticsCounter statisticsCounter;
+    private final UserService userService;
 
     @GetMapping("/interesting")
     @ResponseBody
@@ -32,14 +38,25 @@ public class CourseController {
 
     @GetMapping
     public String courseTable(Model model, @RequestParam(name = "titlePrefix", required = false) String titlePrefix) {
-        model.addAttribute("courses", courseService.findByTitlePrefix(titlePrefix == null ? "" : titlePrefix));
+        model.addAttribute("courses", courseService.findByTitlePrefix((titlePrefix == null ? "" : titlePrefix) + "%")
+                .stream()
+                .sorted(Comparator.comparing(Course::getId))
+                .collect(Collectors.toList()));
         model.addAttribute("activePage", "courses");
         return "course_list";
     }
 
     @GetMapping("/{id}")
+    @Transactional
     public String editCourse(Model model, @PathVariable("id") Long id) {
-        model.addAttribute("course", courseService.findById(id).orElseThrow(() -> new NotFoundException(String.format("Course [%d] not found", id))));
+        Course course = courseService.findById(id).orElseThrow(() -> new NotFoundException(String.format("Course [%d] not found", id)));
+        model.addAttribute("course", course);
+        model.addAttribute("lessons", course.getLessons()
+                .stream()
+                .map(LessonDto::from)
+                .sorted(Comparator.comparing(LessonDto::getId))
+                .collect(Collectors.toList()));
+        model.addAttribute("users", userService.findAllByCoursesNotContains(course));
         return "course_form";
     }
 
@@ -51,6 +68,20 @@ public class CourseController {
 
         courseService.save(course);
         return "redirect:/course";
+    }
+
+    @PostMapping("/{id}/assign")
+    public String assignUserToCourse(@PathVariable("id") Long courseId, @RequestParam("userId") Long userId) {
+        courseService.assignUserToCourse(courseId, userId);
+
+        return "redirect:/course/" + courseId;
+    }
+
+    @DeleteMapping("/{id}/dismiss")
+    public String dismissUserFromCourse(@PathVariable("id") Long courseId, @RequestParam("userId") Long userId) {
+        courseService.dismissUserFromCourse(courseId, userId);
+
+        return "redirect:/course/" + courseId;
     }
 
     @GetMapping("/new")
