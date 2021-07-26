@@ -6,31 +6,28 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "users")
+@Table(name = "roles")
 @Data
-public class User {
+public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "username")
-    private String username;
+    @Column(name = "name")
+    private String name;
 
-    @ManyToMany(mappedBy = "users")
-    private Set<Course> courses;
-
-    @ManyToMany
-    private Set<Role> roles;
+    @ManyToMany(mappedBy = "roles")
+    private Set<User> users;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        User user = (User) o;
+        Role role = (Role) o;
 
-        return id.equals(user.id);
+        return id.equals(role.id);
     }
 
     @Override
