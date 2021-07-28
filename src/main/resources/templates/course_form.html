@@ -13,10 +13,10 @@
     <title>Курсы</title>
 </head>
 <body>
+
+<header th:replace="header :: header"></header>
+
 <div class="container w-75">
-
-    <header th:replace="header :: header"></header>
-
     <h1 class="text-center" th:if="${course.id == null}">Создать курс</h1>
     <h1 class="text-center" th:if="${course.id != null}">Редактировать курс</h1>
 

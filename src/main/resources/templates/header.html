@@ -2,19 +2,22 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <header th:fragment="header">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <a class="nav-link" href="#" th:classappend="${activePage == 'courses'} ? active" th:href="@{/course}">Курсы
-                    <span class="sr-only">(current)</span></a>
-                <a class="nav-link" href="#" th:classappend="${activePage == 'users'} ? active" th:href="@{/users}">Пользователи</a>
-                <form class="float-right" th:method="post" th:action="@{/logout}">
-                    <button type="submit" class="btn btn-dark" >
-                        Выйти <span sec:authentication="principal.username">Username</span>
-                    </button>
-                </form>
+    <div class="container w-75">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link" href="#" th:classappend="${activePage == 'courses'} ? active"
+                       th:href="@{/course}">Курсы
+                        <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="#" th:classappend="${activePage == 'users'} ? active" th:href="@{/users}">Пользователи</a>
+                    <form class="float-right" th:method="post" th:action="@{/logout}">
+                        <button type="submit" class="btn btn-dark">
+                            Выйти <span sec:authentication="principal.username">Username</span>
+                        </button>
+                    </form>
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
+    </div>
 </header>
 </html>
