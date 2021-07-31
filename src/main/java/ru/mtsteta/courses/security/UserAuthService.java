@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 public class UserAuthService implements UserDetailsService {
     private final UserRepository userRepository;
 
-
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
