@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
@@ -29,7 +30,7 @@
         </div>
     </form>
 
-    <div class="pt-2 pb-2">
+    <div class="pt-2 pb-2" sec:authorize="hasRole('ADMIN')">
         <a class="btn btn-warning" th:href="@{/course/new}">Добавить курс</a>
     </div>
 
@@ -51,8 +52,8 @@
                 </td>
                 <td class="text-left" th:text="${course.author}">Course author</td>
                 <td>
-                    <div>
-                        <form th:method="delete" th:action="@{/course/{id}(id = ${course.id})}">
+                    <div sec:authorize="isAuthenticated()">
+                        <form th:method="delete" th:action="@{/course/{id}(id = ${course.id})}" sec:authorize="hasRole('ADMIN')">
                             <button type="submit" class="btn btn-success btn-sm">Удалить</button>
                         </form>
                     </div>
