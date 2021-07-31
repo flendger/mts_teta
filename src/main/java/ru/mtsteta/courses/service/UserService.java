@@ -41,4 +41,11 @@ public class UserService {
         user.setRoles(userDto.getRoles());
         userRepository.save(user);
     }
+
+    public List<UserDto> findAll() {
+        return userRepository.findAll()
+                .stream()
+                .map(UserDto::from)
+                .collect(Collectors.toList());
+    }
 }

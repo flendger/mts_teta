@@ -9,7 +9,7 @@
                     <a class="nav-link" href="#" th:classappend="${activePage == 'courses'} ? active"
                        th:href="@{/course}">Курсы
                         <span class="sr-only">(current)</span></a>
-                    <a class="nav-link" href="#" th:classappend="${activePage == 'users'} ? active" th:href="@{/users}">Пользователи</a>
+                    <a class="nav-link" href="#" th:classappend="${activePage == 'users'} ? active" th:href="@{/user}">Пользователи</a>
                     <form class="float-right" th:method="post" th:action="@{/logout}">
                         <button type="submit" class="btn btn-dark">
                             Выйти <span sec:authentication="principal.username">Username</span>
