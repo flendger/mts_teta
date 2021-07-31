@@ -16,7 +16,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/user")
+@RequestMapping("/admin/user")
 public class UserController {
     private final UserService userService;
     private final RoleService roleService;
@@ -55,12 +55,12 @@ public class UserController {
         }
 
         userService.save(userDto);
-        return "redirect:/user";
+        return "redirect:/admin/user";
     }
 
     @DeleteMapping("/{id}")
     public String deleteUser(@PathVariable("id") Long id) {
         userService.deleteById(id);
-        return "redirect:/user";
+        return "redirect:/admin/user";
     }
 }

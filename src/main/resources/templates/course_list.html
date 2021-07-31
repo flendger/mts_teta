@@ -51,9 +51,6 @@
                 </td>
                 <td class="text-left" th:text="${course.author}">Course author</td>
                 <td>
-                    <div class="mb-1">
-                        <a href="#" class="btn btn-success btn-sm" data-toggle="modal" data-target="#assignCourseModal">Назначить</a>
-                    </div>
                     <div>
                         <form th:method="delete" th:action="@{/course/{id}(id = ${course.id})}">
                             <button type="submit" class="btn btn-success btn-sm">Удалить</button>
@@ -63,39 +60,6 @@
             </tr>
             </tbody>
         </table>
-    </div>
-
-    <div class="modal fade" id="assignCourseModal" tabindex="-1" aria-labelledby="assignCourseModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="assignCourseModalLabel">Назначить курс</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="userSelect"></label>
-                            <select class="form-control" id="userSelect">
-                                <option value="" disabled selected>Выберите пользователя</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                    <button type="button" class="btn btn-primary">Назначить</button>
-                </div>
-            </div>
-        </div>
     </div>
 
     <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${courses.size() == 0}">

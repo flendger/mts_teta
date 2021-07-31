@@ -20,7 +20,7 @@
     <h1 style="text-align: center">Пользователи</h1>
 
     <div class="pt-2 pb-2">
-        <a class="btn btn-warning" th:href="@{/user/new}">Создать пользователя</a>
+        <a class="btn btn-warning" th:href="@{/admin/user/new}">Создать пользователя</a>
     </div>
 
     <div th:if="${users.size() > 0}">
@@ -36,11 +36,11 @@
             <tr th:each="user: ${users}">
                 <td class="text-center" th:text="${user.id}">1</td>
                 <td class="text-left">
-                    <a th:text="${user.username}" th:href="@{/user/{id}(id = ${user.id})}">User name</a>
+                    <a th:text="${user.username}" th:href="@{/admin/user/{id}(id = ${user.id})}">User name</a>
                 </td>
                 <td>
                     <div class="text-center">
-                        <form th:method="delete" th:action="@{/user/{id}(id = ${user.id})}">
+                        <form th:method="delete" th:action="@{/admin/user/{id}(id = ${user.id})}">
                             <button type="submit" class="btn btn-danger btn-sm">Удалить</button>
                         </form>
                     </div>
