@@ -2,6 +2,7 @@ package ru.mtsteta.courses.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -34,6 +35,7 @@ public class LessonController {
         return "lesson_form";
     }
 
+    @Secured("ROLE_ADMIN")
     @PostMapping
     public String saveLesson(@Valid LessonDto lessonDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -44,6 +46,7 @@ public class LessonController {
         return "redirect:/course/" + lessonDto.getCourseId();
     }
 
+    @Secured("ROLE_ADMIN")
     @DeleteMapping("/{course_id}/{lesson_id}")
     public String deleteLesson(@PathVariable("course_id") Long courseId, @PathVariable("lesson_id") Long lessonId) {
         lessonService.deleteById(lessonId);

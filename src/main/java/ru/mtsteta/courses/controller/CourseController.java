@@ -2,6 +2,7 @@ package ru.mtsteta.courses.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -60,6 +61,7 @@ public class CourseController {
         return "course_form";
     }
 
+    @Secured("ROLE_ADMIN")
     @PostMapping
     public String saveCourse(@Valid Course course, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -70,6 +72,7 @@ public class CourseController {
         return "redirect:/course";
     }
 
+    @Secured("ROLE_ADMIN")
     @PostMapping("/{id}/assign")
     public String assignUserToCourse(@PathVariable("id") Long courseId, @RequestParam("userId") Long userId) {
         courseService.assignUserToCourse(courseId, userId);
@@ -77,6 +80,7 @@ public class CourseController {
         return "redirect:/course/" + courseId;
     }
 
+    @Secured("ROLE_ADMIN")
     @DeleteMapping("/{id}/dismiss")
     public String dismissUserFromCourse(@PathVariable("id") Long courseId, @RequestParam("userId") Long userId) {
         courseService.dismissUserFromCourse(courseId, userId);
@@ -90,6 +94,7 @@ public class CourseController {
         return "course_form";
     }
 
+    @Secured("ROLE_ADMIN")
     @DeleteMapping("/{id}")
     public String deleteCourse(@PathVariable Long id) {
         courseService.delete(id);
