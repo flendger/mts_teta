@@ -1,10 +1,12 @@
 package ru.mtsteta.courses.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import ru.mtsteta.courses.domain.Role;
 import ru.mtsteta.courses.dto.UserDto;
 import ru.mtsteta.courses.exceptions.NotFoundException;
@@ -62,5 +64,13 @@ public class UserController {
     public String deleteUser(@PathVariable("id") Long id) {
         userService.deleteById(id);
         return "redirect:/admin/user";
+    }
+
+    @ExceptionHandler
+    public ModelAndView notFoundExceptionHandler(NotFoundException ex, Model model) {
+        ModelAndView modelAndView = new ModelAndView("not_found");
+        modelAndView.setStatus(HttpStatus.NOT_FOUND);
+        model.addAttribute("msg", ex.getMessage());
+        return modelAndView;
     }
 }
