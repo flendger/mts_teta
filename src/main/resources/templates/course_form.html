@@ -72,7 +72,8 @@
                 </td>
                 <td class="text-center">
                     <form th:method="delete"
-                          th:action="@{/lesson/{course_id}/{lesson_id}(course_id = ${course.id}, lesson_id = ${lessonDto.id})}">
+                          th:action="@{/lesson/{lesson_id}(lesson_id = ${lessonDto.id})}">
+                        <input type="hidden" id="courseId" name="courseId" th:value="${course.id}">
                         <button type="submit" class="btn btn-danger" sec:authorize="hasRole('ADMIN')">Удалить</button>
                     </form>
                 </td>

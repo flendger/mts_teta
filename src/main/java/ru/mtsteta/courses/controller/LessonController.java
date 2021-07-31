@@ -47,8 +47,8 @@ public class LessonController {
     }
 
     @Secured("ROLE_ADMIN")
-    @DeleteMapping("/{course_id}/{lesson_id}")
-    public String deleteLesson(@PathVariable("course_id") Long courseId, @PathVariable("lesson_id") Long lessonId) {
+    @DeleteMapping("/{lesson_id}")
+    public String deleteLesson(@RequestParam("courseId") Long courseId, @PathVariable("lesson_id") Long lessonId) {
         lessonService.deleteById(lessonId);
         return "redirect:/course/" + courseId;
     }
