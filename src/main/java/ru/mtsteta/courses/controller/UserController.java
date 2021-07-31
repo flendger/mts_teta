@@ -38,7 +38,7 @@ public class UserController {
     @GetMapping("/{id}")
     public String getUser(Model model, @PathVariable("id") Long id) {
         UserDto userDto = userService.findById(id)
-                .orElseThrow(() -> new NotFoundException(String.format("Lesson [%d] not found", id)));
+                .orElseThrow(() -> new NotFoundException(String.format("User [%d] not found", id)));
 
         model.addAttribute("user", userDto);
         return "user_form";

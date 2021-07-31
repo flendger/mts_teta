@@ -48,4 +48,13 @@ public class UserService {
                 .map(UserDto::from)
                 .collect(Collectors.toList());
     }
+
+    public Optional<User> findUserByUsername(String username) {
+        return userRepository.findUserByUsername(username);
+    }
+
+    public Optional<UserDto> findUserDtoByUsername(String username) {
+        return userRepository.findUserByUsername(username)
+                .map(UserDto::from);
+    }
 }

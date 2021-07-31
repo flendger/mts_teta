@@ -8,19 +8,19 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.mtsteta.courses.dao.UserRepository;
+import ru.mtsteta.courses.service.UserService;
 
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class UserAuthService implements UserDetailsService {
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        return userRepository.findUserByUsername(s)
+        return userService.findUserByUsername(s)
                 .map(user -> new User(
                         user.getUsername(),
                         user.getPassword(),

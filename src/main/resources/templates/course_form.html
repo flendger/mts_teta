@@ -82,7 +82,7 @@
         </table>
     </div>
 
-    <div th:if="${course.id != null}" sec:authorize="hasRole('ADMIN')">
+    <div th:if="${course.id != null}" sec:authorize="isAuthenticated()">
         <p>Пользователи, связанные с курсом</p>
 
         <form class="form-inline" th:method="post" th:action="@{/course/{courseId}/assign(courseId = ${course.id})}">
@@ -113,7 +113,7 @@
                 <td class="text-center">
                     <form th:method="delete" th:action="@{/course/{courseId}/dismiss(courseId = ${course.id})}">
                         <input type="hidden" name="userId" th:value="${user.id}">
-                        <button type="submit" class="btn btn-danger">Снять с курса</button>
+                        <button type="submit" class="btn btn-danger" sec:authorize="hasRole('ADMIN')">Снять с курса</button>
                     </form>
                 </td>
             </tr>
