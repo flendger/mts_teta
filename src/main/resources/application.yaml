@@ -16,4 +16,10 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
-
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 65409520631-pnlnt21k977o3nfujvh5bt3cjfh2gq4s.apps.googleusercontent.com
+            client-secret: KiARYbSAJJCQ10firHu3aSe1
