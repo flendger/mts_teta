@@ -17,8 +17,14 @@ public class User {
     @Column(name = "username")
     private String username;
 
+    @Column(name = "password")
+    private String password;
+
     @ManyToMany(mappedBy = "users")
     private Set<Course> courses;
+
+    @ManyToMany
+    private Set<Role> roles;
 
     @Override
     public boolean equals(Object o) {
@@ -33,5 +39,14 @@ public class User {
     @Override
     public int hashCode() {
         return id.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

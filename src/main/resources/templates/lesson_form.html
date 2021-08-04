@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+>
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
@@ -13,10 +15,10 @@
     <title>Курсы</title>
 </head>
 <body>
+
+<header th:replace="header :: header"></header>
+
 <div class="container w-50">
-
-    <header th:replace="header :: header"></header>
-
     <h1 style="text-align: center" th:if="${lessonDto.id == null}">Создать урок</h1>
     <h1 style="text-align: center" th:if="${lessonDto.id != null}">Редактировать урок</h1>
 
@@ -34,7 +36,7 @@
             <textarea class="form-control" id="text" rows="10" th:field="*{text}"></textarea>
         </div>
         <div class="text-right">
-            <button type="submit" class="btn btn-success mb-3">Сохранить</button>
+            <button type="submit" class="btn btn-success mb-3" sec:authorize="hasRole('ADMIN')">Сохранить</button>
         </div>
     </form>
 </div>
