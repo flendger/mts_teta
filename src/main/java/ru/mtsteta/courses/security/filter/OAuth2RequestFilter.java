@@ -1,4 +1,4 @@
-package ru.mtsteta.courses.security;
+package ru.mtsteta.courses.security.filter;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
