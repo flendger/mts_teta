@@ -1,8 +1,9 @@
 package ru.mtsteta.courses.domain;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -13,7 +14,8 @@ import java.util.Set;
 @Table(name = "courses")
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 public class Course {
     @Id
     @Column(name = "id")
@@ -31,7 +33,7 @@ public class Course {
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<Lesson> lessons;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "courses")
     private Set<User> users;
 
     @Override
