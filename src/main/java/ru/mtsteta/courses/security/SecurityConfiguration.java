@@ -10,9 +10,13 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import ru.mtsteta.courses.security.filter.CookieRequestFilter;
+import ru.mtsteta.courses.security.filter.OAuth2RequestFilter;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
+@RequiredArgsConstructor
 public class SecurityConfiguration {
 
     @Autowired
@@ -24,19 +28,10 @@ public class SecurityConfiguration {
     @RequiredArgsConstructor
     public static class UiWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
         private final OAuth2RequestFilter oAuth2RequestFilter;
+        private final CookieRequestFilter cookieRequestFilter;
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-//            http
-//                    .authorizeRequests()
-//                    .antMatchers("/admin/**").hasRole("ADMIN")
-//                    .antMatchers("/**").permitAll()
-//                    .and()
-//                    .formLogin()
-//                    .defaultSuccessUrl("/course")
-//                    .and()
-//                    .exceptionHandling()
-//                    .accessDeniedPage("/access_denied");
             http
                     .authorizeRequests()
                     .anyRequest().authenticated()
@@ -45,8 +40,16 @@ public class SecurityConfiguration {
                     .defaultSuccessUrl("/course")
                     .and()
                     .oauth2Login()
-                    .defaultSuccessUrl("/course");
-            http.addFilterBefore(oAuth2RequestFilter, UsernamePasswordAuthenticationFilter.class);
+                    .defaultSuccessUrl("/course")
+                    .and()
+                    .logout()
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                    .logoutSuccessUrl("/login")
+                    .invalidateHttpSession(true)
+                    .deleteCookies("jwt");
+            http
+                    .addFilterBefore(oAuth2RequestFilter, UsernamePasswordAuthenticationFilter.class)
+                    .addFilterAfter(cookieRequestFilter, UsernamePasswordAuthenticationFilter.class);
         }
     }
 }
