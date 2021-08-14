@@ -44,9 +44,9 @@ public class CourseService {
     @Transactional
     public void assignUserToCourse(Long courseId, Long userId) {
         Course course = courseRepository.getById(courseId);
-
         User user = userRepository.getById(userId);
-        course.getUsers().add(user);
+
+        user.getCourses().add(course);
 
         courseRepository.save(course);
     }
@@ -54,9 +54,9 @@ public class CourseService {
     @Transactional
     public void dismissUserFromCourse(Long courseId, Long userId) {
         Course course = courseRepository.getById(courseId);
-
         User user = userRepository.getById(userId);
-        course.getUsers().remove(user);
+
+        user.getCourses().remove(course);
 
         courseRepository.save(course);
     }

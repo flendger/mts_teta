@@ -1,13 +1,17 @@
 package ru.mtsteta.courses.domain;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 @Table(name = "users")
-@Data
+@Getter
+@Setter
+@RequiredArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +24,7 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @ManyToMany(mappedBy = "users")
+    @ManyToMany
     private Set<Course> courses;
 
     @ManyToMany
@@ -33,20 +37,21 @@ public class User {
 
         User user = (User) o;
 
-        return id.equals(user.id);
+        if (!id.equals(user.id)) return false;
+        return username.equals(user.username);
     }
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        int result = id.hashCode();
+        result = 31 * result + username.hashCode();
+        return result;
     }
 
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
                 '}';
     }
 }
