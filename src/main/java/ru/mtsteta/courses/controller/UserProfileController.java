@@ -3,6 +3,8 @@ package ru.mtsteta.courses.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -45,6 +47,22 @@ public class UserProfileController {
         }
 
         return "redirect:/profile";
+    }
+
+    @GetMapping("/avatar")
+    @ResponseBody
+    public ResponseEntity<byte[]> getAvatarImage(Principal principal) {
+        String username = principal.getName();
+        String contentType = avatarImageService.getContentType(username).orElse(null);
+        if (contentType == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        byte[] data = avatarImageService.getAvatarImageByUsername(username).orElse(new byte[0]);
+        return ResponseEntity
+                .ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .body(data);
     }
 
     @ExceptionHandler

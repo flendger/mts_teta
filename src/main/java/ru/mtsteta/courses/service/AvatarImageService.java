@@ -10,6 +10,7 @@ import ru.mtsteta.courses.dao.UserRepository;
 import ru.mtsteta.courses.domain.AvatarImage;
 import ru.mtsteta.courses.domain.User;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
@@ -48,11 +49,29 @@ public class AvatarImageService {
 
         avatarImageRepository.save(avatarImage);
 
-        try (OutputStream outputStream = Files.newOutputStream(Path.of(path, filename), CREATE, WRITE, TRUNCATE_EXISTING)){
+        try (OutputStream outputStream = Files.newOutputStream(Path.of(path, filename), CREATE, WRITE, TRUNCATE_EXISTING)) {
             inputStream.transferTo(outputStream);
         } catch (Exception ex) {
             log.error("Can't write to file {}", filename, ex);
             throw new IllegalStateException(ex);
         }
+    }
+
+    public Optional<String> getContentType(String username) {
+        return avatarImageRepository.findAvatarImageByUser_Username(username)
+                .map(AvatarImage::getContentType);
+    }
+
+    public Optional<byte[]> getAvatarImageByUsername(String username) {
+        return avatarImageRepository.findAvatarImageByUser_Username(username)
+                .map(AvatarImage::getFilename)
+                .map(filename -> {
+                    try {
+                        return Files.readAllBytes(Path.of(path, filename));
+                    } catch (IOException ex) {
+                        log.error("Can't read file {}", filename, ex);
+                        throw new IllegalStateException(ex);
+                    }
+                });
     }
 }

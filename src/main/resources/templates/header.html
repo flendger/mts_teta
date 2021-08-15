@@ -11,7 +11,11 @@
                         <span class="sr-only">(current)</span></a>
                     <a class="nav-link mx-2" sec:authorize="hasRole('ADMIN')" th:classappend="${activePage == 'users'} ? active" th:href="@{/admin/user}">Пользователи</a>
                     <a class="btn btn-info mx-2" sec:authorize="!isAuthenticated()" th:href="@{/login}">Войти</a>
-                    <a class="btn btn-info mx-2" sec:authorize="isAuthenticated()" th:href="@{/profile}"><span sec:authentication="principal.username">Username</span></a>
+                    
+                    <a class="btn btn-info mx-2" sec:authorize="isAuthenticated()" th:href="@{/profile}">
+                        <img src="" th:src="@{/profile/avatar}" alt="User profile" width="25" height="25">
+                        <span sec:authentication="principal.username">Username</span></a>
+                    
                     <form class="float-right mx-2" th:method="post" th:action="@{/logout}" sec:authorize="isAuthenticated()">
                         <button type="submit" class="btn btn-dark">
                             Выйти
