@@ -19,22 +19,25 @@
 <div class="container w-25">
     <h1 style="text-align: center">Профиль</h1>
 
-    <form>
+    <form th:object="${user}" th:method="post" th:action="@{/profile}">
         <div class="form-group">
-            <label for="nameInput">Имя пользователя</label>
-            <input type="text" class="form-control" id="nameInput" aria-describedby="nameHelp">
+            <label for="username">Имя пользователя</label>
+            <input type="text" class="form-control" id="username" aria-describedby="nameHelp" name="username"
+                   th:field="*{username}">
         </div>
         <button type="submit" class="btn btn-success mb-3">Сохранить изменения</button>
     </form>
 
-    <div>
-        <p>Для изменения аватара</p>
-        <div class="custom-file">
-            <input type="file" class="custom-file-input" id="inputFile">
-            <label class="custom-file-label" for="inputFile" data-browse="выберите файл" id="inputFileLabel"></label>
+    <form th:method="post" th:action="@{/profile/avatar}" enctype="multipart/form-data">
+        <div>
+            <p>Для изменения аватара</p>
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="avatar" name="avatar">
+                <label class="custom-file-label" for="avatar" data-browse="выберите файл" id="inputFileLabel"></label>
+            </div>
+            <button class="btn btn-success mt-3" type="submit" id="inputFileAddon">Обновить аватарку</button>
         </div>
-        <button class="btn btn-success mt-3" type="button" id="inputFileAddon">Обновить аватарку</button>
-    </div>
+    </form>
 </div>
 </body>
 
