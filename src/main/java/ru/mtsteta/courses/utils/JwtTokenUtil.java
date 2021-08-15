@@ -11,7 +11,7 @@ import java.util.function.Function;
 
 @Component
 public class JwtTokenUtil {
-    private static final long EXP_DURATION = 10 * 1 * 1000;
+    private static final long EXP_DURATION = 30 * 60 * 1000;
 
     @Value("${jwt.secret}")
     private String secret;
