@@ -6,14 +6,19 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-link" href="#" th:classappend="${activePage == 'courses'} ? active"
+                    <a class="nav-link mx-2" href="#" th:classappend="${activePage == 'courses'} ? active"
                        th:href="@{/course}">Курсы
                         <span class="sr-only">(current)</span></a>
-                    <a class="nav-link" sec:authorize="hasRole('ADMIN')" th:classappend="${activePage == 'users'} ? active" th:href="@{/admin/user}">Пользователи</a>
-                    <a class="btn btn-info" sec:authorize="!isAuthenticated()" th:href="@{/login}">Войти</a>
-                    <form class="float-right" th:method="post" th:action="@{/logout}" sec:authorize="isAuthenticated()">
+                    <a class="nav-link mx-2" sec:authorize="hasRole('ADMIN')" th:classappend="${activePage == 'users'} ? active" th:href="@{/admin/user}">Пользователи</a>
+                    <a class="btn btn-info mx-2" sec:authorize="!isAuthenticated()" th:href="@{/login}">Войти</a>
+                    
+                    <a class="btn btn-info mx-2" sec:authorize="isAuthenticated()" th:href="@{/profile}">
+                        <img src="" th:src="@{/profile/avatar}" alt="User profile" width="25" height="25">
+                        <span sec:authentication="principal.username">Username</span></a>
+                    
+                    <form class="float-right mx-2" th:method="post" th:action="@{/logout}" sec:authorize="isAuthenticated()">
                         <button type="submit" class="btn btn-dark">
-                            Выйти <span sec:authentication="principal.username">Username</span>
+                            Выйти
                         </button>
                     </form>
                 </div>

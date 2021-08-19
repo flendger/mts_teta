@@ -23,3 +23,6 @@ spring:
           google:
             client-id: 65409520631-pnlnt21k977o3nfujvh5bt3cjfh2gq4s.apps.googleusercontent.com
             client-secret: KiARYbSAJJCQ10firHu3aSe1
+file:
+  storage:
+    path: avatars/

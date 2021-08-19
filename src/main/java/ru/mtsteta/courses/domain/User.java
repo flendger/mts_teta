@@ -30,6 +30,9 @@ public class User {
     @ManyToMany
     private Set<Role> roles;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private AvatarImage avatarImage;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
