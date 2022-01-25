@@ -1,10 +1,13 @@
 package ru.mtsteta.courses.service;
 
+import org.hibernate.LazyInitializationException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+import ru.mtsteta.courses.dao.UserRepository;
 import ru.mtsteta.courses.domain.Role;
+import ru.mtsteta.courses.domain.User;
 import ru.mtsteta.courses.dto.UserDto;
 
 import java.util.Set;
@@ -15,6 +18,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserServiceTest {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Test
     @Transactional
@@ -34,5 +40,13 @@ class UserServiceTest {
     @Transactional
     void createUserException() {
         assertThrows(Exception.class, () -> userService.createUser("user"));
+    }
+
+    @Test
+    public void testLazyLesson() {
+        User user = userRepository.findById(1L).get();
+
+        assertThrows(LazyInitializationException.class, () -> user.getAvatarImage().getFilename());
+
     }
 }

@@ -15,8 +15,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class AvatarImage {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "user_id")
     private Long id;
 
     @Column(name = "content_type")
@@ -26,5 +25,7 @@ public class AvatarImage {
     private String filename;
 
     @OneToOne
+    @MapsId
+    @JoinColumn(name = "user_id")
     private User user;
 }

@@ -30,7 +30,8 @@ public class User {
     @ManyToMany
     private Set<Role> roles;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @OneToOne(mappedBy = "user")
+    @PrimaryKeyJoinColumn
     private AvatarImage avatarImage;
 
     @Override
